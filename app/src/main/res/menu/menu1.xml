@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/op1"
+        android:title="@string/Estacionamiento" />
+    <item
+        android:id="@+id/op2"
+        android:title="@string/Favoritos" />
+    <item
+        android:id="@+id/op3"
+        android:title="@string/CerrarSesion" />
+</menu>

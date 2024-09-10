@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">EstacionamientoAPP</string>
+    <string name="correo"> Correo</string>
+    <string name="contrasenia"> Contraseña</string>
+    <string name="btnIngresar"> Ingresar</string>
+    <string name="Nombre"> Nombre</string>
+    <string name="Apellido"> Apellido</string>
+    <string name="btnRegistrar"> Registrar</string>
+    <string name="registrate"> Crear Cuenta</string>
+    <string name="Estacionamiento"> Estacionamiento</string>
+    <string name="Favoritos"> Favoritos</string>
+    <string name="CerrarSesion"> Cerrar Sesion</string>"
+</resources>
