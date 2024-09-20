@@ -9,9 +9,10 @@
     tools:context=".DetalleEstacionamiento">
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/volverTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="volver"
         android:text="Volver"
         android:textColor="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,26 +46,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.146"
-        app:srcCompat="@drawable/captura_de_pantalla_2024_09_08_204925" />
+        app:srcCompat="@drawable/capturaestacionamiento" />
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="153dp"
-        android:layout_height="41dp"
-        android:text="¿Te gusto? Agregalo a favorito"
-        android:textColor="#000000"
+    <ImageView
+        android:id="@+id/favoritoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="agregarAFavoritos"
+        android:src="@drawable/estrella_apagada"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintHorizontal_bias="0.832"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.159" />
+        app:layout_constraintVertical_bias="0.208" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="218dp"
         android:layout_height="26dp"
-        android:text="Capacidad de autos 0/10"
+        android:text="Capacidad"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,9 +77,14 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="84dp"
-        android:layout_height="22dp"
+        android:layout_width="100dp"
+        android:layout_height="26dp"
+        android:background="@color/purple_dark"
+        android:shadowColor="#FFFFFF"
         android:text="Descripcion"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.464"
@@ -90,7 +96,8 @@
         android:id="@+id/textView18"
         android:layout_width="350dp"
         android:layout_height="108dp"
-        android:text="Estacionamiento Maipu, ubicado en la ciudad de Copiapo, ofrece espacios seguros y convenientes para estacionar los vehiculos. Cuenta con areas delimitadas y bien señalizadas para autos y motocicletas. Su ubicacion en la ciudad facilita el acceso a lugares importantes de Copiapo."
+        android:text="Ubicado en Maipú 341, Copiapó, Atacama. El estacionamiento ofrece espacios seguros y convenientes para estacionar los vehiculos. Cuenta con areas delimitadas y bien señalizadas para autos y motocicletas. Su ubicacion en la ciudad facilita el acceso a lugares importantes."
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,9 +108,13 @@
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="186dp"
+        android:layout_height="22dp"
+        android:background="@color/purple_dark"
         android:text="Horario de Apertura y Cierre"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,9 +123,23 @@
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="281dp"
-        android:layout_height="37dp"
+        android:layout_width="286dp"
+        android:layout_height="45dp"
+        android:allowUndo="false"
+        android:background="#FA0000"
+        android:backgroundTintMode="add"
+        android:breakStrategy="high_quality"
+        android:fadeScrollbars="false"
+        android:hapticFeedbackEnabled="false"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
         android:text="Lunes a Sabado: 07:00 AM - 10:00 PM Domingo y Festivo: 09:00 AM - 08:00 PM"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textDirection="firstStrong"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:barrierAllowsGoneWidgets="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,54 +148,176 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="25dp"
+        android:background="@color/purple_dark"
         android:text="Servicios Extras"
-        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734" />
+        app:layout_constraintVertical_bias="0.745" />
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="25dp"
+        android:background="@color/purple_dark"
         android:text="Seguridad"
-        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803" />
+        app:layout_constraintVertical_bias="0.813" />
 
     <TextView
         android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="25dp"
+        android:background="@color/design_default_color_primary"
         android:text="Lugares Cercanos"
-        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintVertical_bias="0.892" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reservar"
+        android:text="RESERVAR"
+        android:onClick="reservar"
         android:textColor="#00BCD4"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957" />
+        app:layout_constraintVertical_bias="0.977" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="159dp"
+        android:layout_height="41dp"
+        android:text="¿Te gustó? Agregalo a favoritos"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.139" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736"
+        app:srcCompat="@drawable/wifi" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="53dp"
+        android:layout_height="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.735"
+        app:srcCompat="@drawable/limpieza_auto" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.818"
+        app:srcCompat="@drawable/camara_seguridad" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.818"
+        app:srcCompat="@drawable/seguridad" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904"
+        app:srcCompat="@drawable/carritocompras" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904"
+        app:srcCompat="@drawable/banco" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904"
+        app:srcCompat="@drawable/restaurant" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904"
+        app:srcCompat="@drawable/bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

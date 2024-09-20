@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,17 +15,32 @@
         android:theme="@style/Theme.EstacionamientoAPP"
         tools:targetApi="31">
         <activity
+            android:name=".Historial"
+            android:exported="true" />
+        <activity
+            android:name=".Estacionamiento"
+            android:exported="false" />
+        <activity
+            android:name=".Favoritos"
+            android:exported="false" />
+        <activity
+            android:name=".CancelarReserva"
+            android:exported="false" />
+        <activity
+            android:name=".Reservado"
+            android:exported="false" />
+        <activity
+            android:name=".Reservar"
+            android:exported="false" />
+        <activity
             android:name=".DetalleEstacionamiento"
             android:exported="false" />
         <activity
-            android:name=".OlvidarCuenta"
-            android:exported="false" />
-        <activity
             android:name=".RegistrarCuenta"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Principal1"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

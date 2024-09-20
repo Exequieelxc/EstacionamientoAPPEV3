@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/purple"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imagenEstacionamiento"
+        android:layout_width="104dp"
+        android:layout_height="91dp"
+        android:src="@drawable/capturaestacionamiento" />
+
+    <TextView
+        android:id="@+id/nombreEstacionamiento"
+        android:layout_width="217dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:text="Nombre del estacionamiento" />
+
+    <ImageView
+        android:id="@+id/estrellaFavorito"
+        android:layout_width="65dp"
+        android:layout_height="88dp"
+        android:src="@drawable/estrella_apagada" />
+
+
+</LinearLayout>
