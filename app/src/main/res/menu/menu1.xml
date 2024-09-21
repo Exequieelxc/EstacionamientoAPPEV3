@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/op1"
-        android:title="@string/Estacionamiento" />
+        android:id="@+id/action_estacionamientos"
+        android:title="Estacionamientos" />
     <item
-        android:id="@+id/op2"
-        android:title="@string/Favoritos" />
+        android:id="@+id/action_favoritos"
+        android:title="Favoritos" />
     <item
-        android:id="@+id/historial"
-        android:title="Historial"
-        app:showAsAction="never" />
+        android:id="@+id/action_historial"
+        android:title="Historial" />
     <item
-        android:id="@+id/op3"
-        android:title="@string/CerrarSesion" />
+        android:id="@+id/action_cerrar_sesion"
+        android:title="Cerrar Sesión" />
 </menu>

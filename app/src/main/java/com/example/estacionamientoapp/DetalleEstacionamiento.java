@@ -46,33 +46,22 @@ public class DetalleEstacionamiento extends AppCompatActivity {
         } else {
             nombreEstacionamientoTextView.setText("Nombre no disponible");
         }
-
-        // Obtener el ID del estacionamiento desde el Intent
         estacionamientoId = getIntent().getStringExtra("idEstacionamiento");
 
         if (estacionamientoId != null) {
-            // Usar el idEstacionamiento para obtener la información del estacionamiento desde Firebase
             DatabaseReference estacionamientoRef = FirebaseDatabase.getInstance().getReference("estacionamientos").child(estacionamientoId);
             estacionamientoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        // Obtener la información del estacionamiento desde snapshot
-                        // Ejemplo:
                         String capacidad = snapshot.child("capacidad").getValue(String.class);
                         String descripcion = snapshot.child("descripcion").getValue(String.class);
-                        // ... obtener otros datos del estacionamiento
-
-                        // Actualizar la UI con la información del estacionamiento
-                        // Ejemplo:
                         TextView capacidadTextView = findViewById(R.id.textView16);
                         capacidadTextView.setText("Capacidad: " + capacidad);
                         TextView descripcionTextView = findViewById(R.id.textView18);
                         descripcionTextView.setText(descripcion);
-                        // ... actualizar otros elementos de la UI
                     } else {
                         Log.e("DetalleEstacionamiento", "El estacionamiento no existe");
-                        // Manejar el caso en que el estacionamiento no existe
                     }
                 }
 
@@ -87,7 +76,6 @@ public class DetalleEstacionamiento extends AppCompatActivity {
         } else {
             // Manejar el caso en que no se reciba el ID
             Log.e("DetalleEstacionamiento", "No se pudo identificar el ID del estacionamiento");
-            Toast.makeText(this, "Error: No se pudo obtener el ID del estacionamiento", Toast.LENGTH_SHORT).show();
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -103,7 +91,6 @@ public class DetalleEstacionamiento extends AppCompatActivity {
             String userId = user.getUid();
             DatabaseReference favoritosRef = FirebaseDatabase.getInstance().getReference("favoritos").child(userId).child(estacionamientoId);
 
-
             favoritosRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,7 +100,6 @@ public class DetalleEstacionamiento extends AppCompatActivity {
                         favoritoImageView.setImageResource(R.drawable.estrella_apagada);
                     }
                 }
-
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -159,13 +145,10 @@ public class DetalleEstacionamiento extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(DetalleEstacionamiento.this, "Error: No se pudo obtener el ID del estacionamiento", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(DetalleEstacionamiento.this, "Debes iniciar sesión para agregar a favoritos", Toast.LENGTH_SHORT).show();
         }
     }
-
     public void reservar(View view) {
         Intent intent = new Intent(this, Reservar.class);
         startActivity(intent);

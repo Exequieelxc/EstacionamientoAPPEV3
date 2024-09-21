@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -21,7 +21,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,22 +31,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Favoritos extends AppCompatActivity {
-
+    private String userId;
     private RecyclerView recyclerViewFavoritos;
     private EstacionamientoAdapter estacionamientoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_favoritos);
+
         Toolbar toolbar = findViewById(R.id.toolbarFavoritos);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Favoritos");
+        }
 
         recyclerViewFavoritos = findViewById(R.id.recyclerViewFavoritos);
         recyclerViewFavoritos.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +69,7 @@ public class Favoritos extends AppCompatActivity {
     private void cargarFavoritos() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            String userId = user.getUid();
+            userId = user.getUid();
             DatabaseReference favoritosRef = FirebaseDatabase.getInstance().getReference("favoritos").child(userId);
 
             favoritosRef.addValueEventListener(new ValueEventListener() {
@@ -130,10 +133,17 @@ public class Favoritos extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.op1) {
+        if (itemId == R.id.action_estacionamientos) {
             finish();
             return true;
-        } else if (itemId == R.id.op3) {
+        } else if (itemId == R.id.action_favoritos) {
+            return true;
+        } else if (itemId == R.id.action_historial) {
+            Intent intent = new Intent(Favoritos.this, Historial.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.action_cerrar_sesion) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(Favoritos.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -169,11 +179,9 @@ public class Favoritos extends AppCompatActivity {
             Estacionamiento estacionamiento = estacionamientos.get(position);
             holder.nombreTextView.setText(estacionamiento.getNombre());
 
-
             Glide.with(holder.itemView.getContext())
                     .load(estacionamiento.getImagenUrl())
                     .into(holder.imagenImageView);
-
 
             if (estacionamiento.isEsFavorito()) {
                 holder.estrellaImageView.setImageResource(R.drawable.estrella_encendida);
@@ -181,23 +189,19 @@ public class Favoritos extends AppCompatActivity {
                 holder.estrellaImageView.setImageResource(R.drawable.estrella_apagada);
             }
 
-
             holder.estrellaImageView.setOnClickListener(v -> {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     String userId = user.getUid();
                     String estacionamientoId = estacionamiento.getId();
 
-
                     DatabaseReference favoritosRef = FirebaseDatabase.getInstance().getReference("favoritos").child(userId).child(estacionamientoId);
                     favoritosRef.removeValue();
-
 
                     estacionamientos.remove(estacionamiento);
                     notifyItemRemoved(position);
                 }
             });
-
 
             holder.itemView.setOnClickListener(view -> {
                 String idEstacionamiento = estacionamiento.getId();
@@ -208,26 +212,23 @@ public class Favoritos extends AppCompatActivity {
             });
         }
 
-
         @Override
         public int getItemCount() {
             return estacionamientos.size();
         }
 
-
         public class EstacionamientoViewHolder extends RecyclerView.ViewHolder {
-
 
             public TextView nombreTextView;
             public ImageView imagenImageView;
             public ImageView estrellaImageView;
 
-
             public EstacionamientoViewHolder(@NonNull View itemView) {
                 super(itemView);
                 nombreTextView = itemView.findViewById(R.id.nombreEstacionamiento);
                 imagenImageView = itemView.findViewById(R.id.imagenEstacionamiento);
-                estrellaImageView = itemView.findViewById(R.id.estrellaFavorito);}
+                estrellaImageView = itemView.findViewById(R.id.estrellaFavorito);
+            }
         }
     }
 }

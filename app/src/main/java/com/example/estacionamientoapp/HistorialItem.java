@@ -1,11 +1,13 @@
 package com.example.estacionamientoapp;
 
 public class HistorialItem {
-    public String nombre;
-    public String imagenUrl;
+    private String nombre;
 
-    public HistorialItem(String nombre, String imagenUrl) {
+    public HistorialItem(String nombre) {
         this.nombre = nombre;
-        this.imagenUrl = imagenUrl;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

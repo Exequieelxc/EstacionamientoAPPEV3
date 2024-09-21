@@ -9,7 +9,6 @@
     android:padding="16dp"
     tools:context=".RegistrarCuenta">
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -19,7 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <EditText
             android:id="@+id/editTextTextNombre"
@@ -31,7 +29,6 @@
             android:layout_marginBottom="8dp"
             />
 
-
         <EditText
             android:id="@+id/editTextTextApellido"
             android:layout_width="match_parent"
@@ -41,7 +38,6 @@
             android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
             />
-
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
@@ -53,7 +49,6 @@
             android:layout_marginBottom="8dp"
             />
 
-
         <EditText
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
@@ -64,7 +59,6 @@
             android:layout_marginBottom="16dp"
             />
 
-
         <Button
             android:id="@+id/buttonRegistrar"
             android:layout_width="wrap_content"
@@ -74,8 +68,6 @@
             android:layout_gravity="center_horizontal"
             />
 
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

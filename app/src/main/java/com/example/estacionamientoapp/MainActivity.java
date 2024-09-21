@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        Log.d("MainActivity", "Usuario autenticado: " + user); // Log para verificar la autenticación
+                        Log.d("MainActivity", "Usuario autenticado: " + user);
                         if (user != null) {
                             String uid = user.getUid();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                         String apellido = usuario.getApellido();
                                         String correo = usuario.getCorreo();
                                         Intent i = new Intent(MainActivity.this, Principal1.class);
-                                        i.putExtra("userId", user.getUid()); // Pasar el ID del usuario en el Intent
+                                        i.putExtra("userId", user.getUid());
                                         startActivity(i);
                                     } else {
                                         Toast.makeText(MainActivity.this, "No se encontraron datos del usuario", Toast.LENGTH_SHORT).show();
@@ -72,18 +72,16 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(MainActivity.this, "Error al obtener datos del usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.e("MainActivity", "Error al obtener datos del usuario", e);
                                 }
                             });
                         } else {
-                            Toast.makeText(MainActivity.this, "Error en el inicio de sesión: Usuario no encontrado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(MainActivity.this, "Error en el inicio de sesión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("MainActivity", "Error en el inicio de sesión", e);
                     }
                 });
     }

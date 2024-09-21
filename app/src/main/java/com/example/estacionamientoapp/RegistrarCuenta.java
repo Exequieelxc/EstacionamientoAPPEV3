@@ -67,7 +67,7 @@ public class RegistrarCuenta extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d("RegistrarCuenta", "Usuario creado con éxito en Firebase Authentication");
+                            Log.d("RegistrarCuenta", "Usuario creado con éxito");
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -79,14 +79,14 @@ public class RegistrarCuenta extends AppCompatActivity {
                                 DatabaseReference usersRef = database.getReference("usuarios");
                                 usersRef.child(uid).setValue(usuario)
                                         .addOnSuccessListener(aVoid -> {
-                                            Log.d("RegistrarCuenta", "Datos del usuario guardados con éxito en Realtime Database");
+                                            Log.d("RegistrarCuenta", "Datos del usuario guardados con éxito");
                                             Toast.makeText(RegistrarCuenta.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(RegistrarCuenta.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         })
                                         .addOnFailureListener(e -> {
-                                            Log.e("RegistrarCuenta", "Error al guardar datos del usuario en Realtime Database", e);
+                                            Log.e("RegistrarCuenta", "Error al guardar datos del usuario", e);
                                             Toast.makeText(RegistrarCuenta.this, "Error al guardar datos del usuario: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                         });
                             } else {
@@ -96,7 +96,7 @@ public class RegistrarCuenta extends AppCompatActivity {
                             try {
                                 throw task.getException();
                             } catch (Exception e) {
-                                Log.e("RegistrarCuenta", "Error al crear el usuario en Firebase Authentication", e);
+                                Log.e("RegistrarCuenta", "Error, verifique que los campos esten llenos", e);
                                 Toast.makeText(RegistrarCuenta.this, "Error al registrar el usuario: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }

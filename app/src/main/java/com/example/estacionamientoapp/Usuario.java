@@ -6,7 +6,6 @@ public class Usuario {
     private String correo;
 
     public Usuario() {
-        // Constructor vacío requerido por Firebase
     }
 
     public Usuario(String nombre, String apellido, String correo) {

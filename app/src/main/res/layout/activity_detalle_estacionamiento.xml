@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.146"
-        app:srcCompat="@drawable/capturaestacionamiento" />
+        app:srcCompat="@drawable/estacionamiento_1" />
 
     <ImageView
         android:id="@+id/favoritoImageView"

@@ -33,19 +33,15 @@ public class Reservado extends AppCompatActivity {
             return insets;
         });
 
-        // Obtener el lugar seleccionado del Intent
         int lugar = getIntent().getIntExtra("lugar", 0);
 
-        // Mostrar el lugar seleccionado
         TextView lugarTextView = findViewById(R.id.textView41);
         lugarTextView.setText("Lugar seleccionado: " + lugar);
 
-        // Generar el código QR
         ImageView qrImageView = findViewById(R.id.qrImageView);
         Bitmap qrBitmap = generarQr("Lugar: " + lugar);
         qrImageView.setImageBitmap(qrBitmap);
 
-        // Iniciar el Chronometer
         Chronometer chronometer = findViewById(R.id.chronometer);
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
@@ -74,7 +70,7 @@ public class Reservado extends AppCompatActivity {
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE); // Corrección aquí
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
                 }
             }
             return bitmap;

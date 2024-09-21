@@ -10,7 +10,7 @@
         android:id="@+id/imagenEstacionamiento"
         android:layout_width="104dp"
         android:layout_height="91dp"
-        android:src="@drawable/capturaestacionamiento" />
+        android:src="@drawable/estacionamiento_1" />
 
     <TextView
         android:id="@+id/nombreEstacionamiento"
@@ -25,6 +25,5 @@
         android:layout_width="65dp"
         android:layout_height="88dp"
         android:src="@drawable/estrella_apagada" />
-
 
 </LinearLayout>

@@ -53,7 +53,6 @@ public class Reservar extends AppCompatActivity {
         establecerEstadoLugar(lugar9ImageView, 9);
         establecerEstadoLugar(lugar10ImageView, 10);
 
-        // Hacer que el TextView "Volver" sea clickable
         TextView textViewVolver = findViewById(R.id.textView25);
         String text = textViewVolver.getText().toString();
         SpannableString ss = new SpannableString(text);
@@ -185,7 +184,6 @@ public class Reservar extends AppCompatActivity {
         actualizarImagenesLugares();
         mensajeTextView.setText("Lugar seleccionado: ");
 
-        // Iniciar la Activity Reservado
         Intent intent = new Intent(Reservar.this, Reservado.class);
         intent.putExtra("lugar", lugarId);
         startActivity(intent);
