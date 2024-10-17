@@ -2,7 +2,6 @@ package com.example.estacionamientoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Favoritos extends AppCompatActivity {
+public class Favoritos extends BaseActivity {
     private String userId;
     private RecyclerView recyclerViewFavoritos;
     private EstacionamientoAdapter estacionamientoAdapter;
@@ -52,6 +50,9 @@ public class Favoritos extends AppCompatActivity {
             actionBar.setTitle("Favoritos");
         }
 
+        toolbar.setNavigationOnClickListener(v -> {
+        });
+
         recyclerViewFavoritos = findViewById(R.id.recyclerViewFavoritos);
         recyclerViewFavoritos.setLayoutManager(new LinearLayoutManager(this));
         estacionamientoAdapter = new EstacionamientoAdapter(new ArrayList<>());
@@ -66,12 +67,15 @@ public class Favoritos extends AppCompatActivity {
         cargarFavoritos();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     private void cargarFavoritos() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userId = user.getUid();
             DatabaseReference favoritosRef = FirebaseDatabase.getInstance().getReference("favoritos").child(userId);
-
             favoritosRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,13 +84,11 @@ public class Favoritos extends AppCompatActivity {
                         String estacionamientoId = favoritoSnapshot.getKey();
                         favoritosIds.add(estacionamientoId);
                     }
-
                     obtenerEstacionamientos(favoritosIds);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("Favoritos", "Error al obtener favoritos", error.toException());
                 }
             });
         }
@@ -103,13 +105,8 @@ public class Favoritos extends AppCompatActivity {
                     if (snapshot.exists()) {
                         String nombre = snapshot.child("nombre").getValue(String.class);
                         String imagenUrl = snapshot.child("imagenUrl").getValue(String.class);
-                        boolean esFavorito = false;
-                        if (snapshot.child("esFavorito").exists()) {
-                            esFavorito = snapshot.child("esFavorito").getValue(Boolean.class);
-                        }
-                        Estacionamiento estacionamiento = new Estacionamiento(estacionamientoId, nombre, imagenUrl, esFavorito);
+                        Estacionamiento estacionamiento = new Estacionamiento(estacionamientoId, nombre, imagenUrl, true);
                         estacionamientos.add(estacionamiento);
-
                         estacionamientoAdapter.setEstacionamientos(estacionamientos);
                         estacionamientoAdapter.notifyDataSetChanged();
                     }
@@ -117,7 +114,6 @@ public class Favoritos extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("Favoritos", "Error al obtener estacionamiento", error.toException());
                 }
             });
         }
@@ -132,7 +128,6 @@ public class Favoritos extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-
         if (itemId == R.id.action_estacionamientos) {
             finish();
             return true;
@@ -150,13 +145,11 @@ public class Favoritos extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public class EstacionamientoAdapter extends RecyclerView.Adapter<EstacionamientoAdapter.EstacionamientoViewHolder> {
-
         private List<Estacionamiento> estacionamientos;
 
         public EstacionamientoAdapter(List<Estacionamiento> estacionamientos) {
@@ -170,7 +163,7 @@ public class Favoritos extends AppCompatActivity {
         @NonNull
         @Override
         public EstacionamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_estacionamiento, parent, false); // Corregido a item_estacionamiento
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_estacionamiento, parent, false);
             return new EstacionamientoViewHolder(itemView);
         }
 
@@ -179,30 +172,20 @@ public class Favoritos extends AppCompatActivity {
             Estacionamiento estacionamiento = estacionamientos.get(position);
             holder.nombreTextView.setText(estacionamiento.getNombre());
 
-            Glide.with(holder.itemView.getContext())
-                    .load(estacionamiento.getImagenUrl())
-                    .into(holder.imagenImageView);
+            holder.iconoImageView.setImageResource(R.drawable.favoritossss);
 
-            if (estacionamiento.isEsFavorito()) {
-                holder.estrellaImageView.setImageResource(R.drawable.estrella_encendida);
-            } else {
-                holder.estrellaImageView.setImageResource(R.drawable.estrella_apagada);
-            }
-
+            holder.estrellaImageView.setImageResource(R.drawable.estrella_encendida);
             holder.estrellaImageView.setOnClickListener(v -> {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     String userId = user.getUid();
                     String estacionamientoId = estacionamiento.getId();
-
                     DatabaseReference favoritosRef = FirebaseDatabase.getInstance().getReference("favoritos").child(userId).child(estacionamientoId);
                     favoritosRef.removeValue();
-
                     estacionamientos.remove(estacionamiento);
                     notifyItemRemoved(position);
                 }
             });
-
             holder.itemView.setOnClickListener(view -> {
                 String idEstacionamiento = estacionamiento.getId();
                 Intent intent = new Intent(holder.itemView.getContext(), DetalleEstacionamiento.class);
@@ -218,15 +201,14 @@ public class Favoritos extends AppCompatActivity {
         }
 
         public class EstacionamientoViewHolder extends RecyclerView.ViewHolder {
-
             public TextView nombreTextView;
-            public ImageView imagenImageView;
+            public ImageView iconoImageView;
             public ImageView estrellaImageView;
 
             public EstacionamientoViewHolder(@NonNull View itemView) {
                 super(itemView);
                 nombreTextView = itemView.findViewById(R.id.nombreEstacionamiento);
-                imagenImageView = itemView.findViewById(R.id.imagenEstacionamiento);
+                iconoImageView = itemView.findViewById(R.id.iconoEstacionamiento);
                 estrellaImageView = itemView.findViewById(R.id.estrellaFavorito);
             }
         }

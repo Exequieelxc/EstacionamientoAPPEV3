@@ -37,11 +37,10 @@ android {
 
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.fragment:fragment:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
     implementation ("com.makeramen:roundedimageview:2.3.0")
     implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation ("com.google.zxing:core:3.5.0")
@@ -53,6 +52,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics:22.1.0")
     implementation("com.google.firebase:firebase-firestore:25.1.0")
     implementation (platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation ("com.google.firebase:firebase-storage:21.0.1")
     implementation ("com.google.firebase:firebase-firestore")
     implementation ("com.google.firebase:firebase-database")
     implementation ("com.github.bumptech.glide:glide:4.15.1")

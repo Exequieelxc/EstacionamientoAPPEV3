@@ -6,4 +6,7 @@
     <color name="purple_dark">#6200EA</color>
     <color name="teal">#98A9A9</color>
     <color name="Yellow">#FFFF00</color>
+    <color name="cyan">#00FFE7</color>
+    <color name="red">#FF0000</color>
+    <color name="medium_purple">#9370DB</color>
 </resources>

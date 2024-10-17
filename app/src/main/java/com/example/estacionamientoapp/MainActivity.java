@@ -7,28 +7,29 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void login(View v) {
@@ -43,45 +44,25 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(correo, contrasenia)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(correo, contrasenia)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onSuccess(AuthResult authResult) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        Log.d("MainActivity", "Usuario autenticado: " + user);
-                        if (user != null) {
-                            String uid = user.getUid();
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference usersRef = database.getReference("usuarios").child(uid);
-                            usersRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                @Override
-                                public void onSuccess(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                                        String nombre = usuario.getNombre();
-                                        String apellido = usuario.getApellido();
-                                        String correo = usuario.getCorreo();
-                                        Intent i = new Intent(MainActivity.this, Principal1.class);
-                                        i.putExtra("userId", user.getUid());
-                                        startActivity(i);
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "No se encontraron datos del usuario", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, "Error al obtener datos del usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Inicio de sesion exitoso");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+
+                            Intent intent = new Intent(MainActivity.this, Principal1.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+
                         } else {
-                            Toast.makeText(MainActivity.this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
+                            Log.w(TAG, "Usuario no encontrado", task.getException());
+                            Toast.makeText(MainActivity.this, "Correo o contraseña incorrecta",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "Error en el inicio de sesión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -89,5 +70,11 @@ public class MainActivity extends AppCompatActivity {
     public void registrar(View v) {
         Intent i = new Intent(this, RegistrarCuenta.class);
         startActivity(i);
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+        } else {
+        }
     }
 }

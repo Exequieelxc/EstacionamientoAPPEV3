@@ -1,15 +1,12 @@
 package com.example.estacionamientoapp;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
@@ -24,33 +21,28 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
     @NonNull
     @Override
     public HistorialViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("HistorialAdapter", "onCreateViewHolder");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_historial, parent, false);
         return new HistorialViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistorialViewHolder holder, int position) {
-        Log.d("HistorialAdapter", "onBindViewHolder: position = " + position);
         HistorialItem item = historial.get(position);
         holder.nombreTextView.setText(item.getNombre());
     }
 
     @Override
     public int getItemCount() {
-        Log.d("HistorialAdapter", "getItemCount: size = " + historial.size());
         return historial.size();
     }
 
     public void setHistorial(List<HistorialItem> historial) {
-        Log.d("HistorialAdapter", "setHistorial: size = " + historial.size());
         this.historial = historial;
         notifyDataSetChanged();
     }
 
     public static class HistorialViewHolder extends RecyclerView.ViewHolder {
         public TextView nombreTextView;
-
 
         public HistorialViewHolder(@NonNull View itemView) {
             super(itemView);

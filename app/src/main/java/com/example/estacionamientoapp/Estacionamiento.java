@@ -3,30 +3,33 @@ package com.example.estacionamientoapp;
 public class Estacionamiento {
     public String id;
     public String nombre;
-    public String capacidad;
-    public String descripcion;
-    private String imagenUrl; // Nueva propiedad para la URL de la imagen
-    private boolean esFavorito;
+    public int capacidad;
+    public int espaciosDisponibles;
+    private float calificacion;
 
     public Estacionamiento() {}
+
+    public Estacionamiento(String id, String nombre, int capacidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.capacidad = capacidad;
+        this.espaciosDisponibles = capacidad;
+    }
 
     public Estacionamiento(String id, String nombre, String imagenUrl, boolean esFavorito) {
         this.id = id;
         this.nombre = nombre;
-        this.imagenUrl = imagenUrl;
-        this.esFavorito = esFavorito;
-        this.capacidad = "";
-        this.descripcion = "";
+        this.capacidad = 0;
+        this.espaciosDisponibles = 0;
     }
 
     public Estacionamiento(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.capacidad = "";
-        this.descripcion = "";
+        this.capacidad = 0;
+        this.espaciosDisponibles = 0;
     }
 
-    // Getters
     public String getId() {
         return id;
     }
@@ -35,20 +38,23 @@ public class Estacionamiento {
         return nombre;
     }
 
-    public String getImagenUrl() {
-        return imagenUrl;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setImagenUrl(String imagenUrl) {
-        this.imagenUrl = imagenUrl;
+    public float getCalificacion() {
+        return calificacion;
     }
 
-    public boolean isEsFavorito() {
-        return esFavorito;
+    public void setCalificacion(float calificacion) {
+        this.calificacion = calificacion;
     }
 
-    public void setEsFavorito(boolean esFavorito) {
-        this.esFavorito = esFavorito;
+    public int getEspaciosDisponibles() {
+        return espaciosDisponibles;
     }
 
+    public void setEspaciosDisponibles(int espaciosDisponibles) {
+        this.espaciosDisponibles = espaciosDisponibles;
+    }
 }

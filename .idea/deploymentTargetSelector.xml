@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-21T00:25:04.449047800Z">
+        <DropdownSelection timestamp="2024-10-14T14:49:26.373993Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Desktop\.android\avd\Pixel_2_API_23_2.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R58NC3MJTSL" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -31,6 +31,9 @@
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="CancelarReserva">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

@@ -3,10 +3,8 @@ package com.example.estacionamientoapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Historial extends AppCompatActivity {
+public class Historial extends BaseActivity {
 
     private HistorialAdapter adapter;
 
@@ -32,15 +30,18 @@ public class Historial extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Toolbar toolbar = findViewById(R.id.toolbarHistorial);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        Toolbar toolbar = findViewById(R.id.toolbarHistorial);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Historial");
         }
 
+        toolbar.setNavigationOnClickListener(v -> {
+        });
+
         String userId = getIntent().getStringExtra("userId");
-        Log.d("Historial", "userId: " + userId);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewHistorial);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,26 +54,18 @@ public class Historial extends AppCompatActivity {
             historialRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d("Historial", "DataSnapshot: " + snapshot.toString());
-
                     List<HistorialItem> historialList = new ArrayList<>();
-
                     String nombre = snapshot.child("nombre").getValue(String.class);
                     if (nombre != null) {
-                        Log.d("Historial", "Nombre: " + nombre);
                         historialList.add(new HistorialItem(nombre));
                     }
-
                     adapter.setHistorial(historialList);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("Historial", "Error al obtener el historial", error.toException());
                 }
             });
-        } else {
-            Log.e("Historial", "userId es nulo");
         }
     }
 
@@ -81,9 +74,8 @@ public class Historial extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu1, menu);
         return true;
     }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_estacionamientos) {
             Intent intent = new Intent(this, Principal1.class);
@@ -103,6 +95,10 @@ public class Historial extends AppCompatActivity {
             finish();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
     }
 }

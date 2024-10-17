@@ -2,8 +2,8 @@ package com.example.estacionamientoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -39,11 +39,13 @@ public class RegistrarCuenta extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
-    public void volverAInicioSesion(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        TextView volverInicioSesion = findViewById(R.id.volverInicioSesion);
+        volverInicioSesion.setOnClickListener(v -> {
+            Intent intent = new Intent(RegistrarCuenta.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     public void registrarse(View view) {
@@ -62,33 +64,34 @@ public class RegistrarCuenta extends AppCompatActivity {
             return;
         }
 
+        if (contrasena.length() < 6) {
+            Toast.makeText(this, "Debe ingresar 6 dígitos mínimo en contraseña", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d("RegistrarCuenta", "Usuario creado con éxito");
-
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                             if (user != null) {
                                 String uid = user.getUid();
-                                Usuario usuario = new Usuario(nombre, apellido, correo);
+                                Usuario usuario = new Usuario(nombre, apellido, correo, contrasena);
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference usersRef = database.getReference("usuarios");
                                 usersRef.child(uid).setValue(usuario)
                                         .addOnSuccessListener(aVoid -> {
-                                            Log.d("RegistrarCuenta", "Datos del usuario guardados con éxito");
                                             Toast.makeText(RegistrarCuenta.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(RegistrarCuenta.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         })
-                                        .addOnFailureListener(e -> {
-                                            Log.e("RegistrarCuenta", "Error al guardar datos del usuario", e);
-                                            Toast.makeText(RegistrarCuenta.this, "Error al guardar datos del usuario: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        });
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(RegistrarCuenta.this, "Error al guardar datos del usuario: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                                        );
                             } else {
                                 Toast.makeText(RegistrarCuenta.this, "Error: el usuario no está autenticado", Toast.LENGTH_SHORT).show();
                             }
@@ -96,7 +99,6 @@ public class RegistrarCuenta extends AppCompatActivity {
                             try {
                                 throw task.getException();
                             } catch (Exception e) {
-                                Log.e("RegistrarCuenta", "Error, verifique que los campos esten llenos", e);
                                 Toast.makeText(RegistrarCuenta.this, "Error al registrar el usuario: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }

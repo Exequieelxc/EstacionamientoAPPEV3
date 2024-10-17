@@ -7,10 +7,10 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imagenEstacionamiento"
-        android:layout_width="104dp"
-        android:layout_height="91dp"
-        android:src="@drawable/estacionamiento_1" />
+        android:id="@+id/iconoEstacionamiento"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:src="@drawable/favoritossss" />
 
     <TextView
         android:id="@+id/nombreEstacionamiento"
@@ -18,7 +18,8 @@
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
-        android:text="Nombre del estacionamiento" />
+        android:text="Nombre del estacionamiento"
+        android:textColor="@color/black" />
 
     <ImageView
         android:id="@+id/estrellaFavorito"

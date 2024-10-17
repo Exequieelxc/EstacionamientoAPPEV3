@@ -20,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Reservar extends AppCompatActivity {
 
+    private boolean[] lugaresDisponibles = {true, true, true, true, true, true, true, true, true, true, true};
+    private int lugarSeleccionado = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +33,12 @@ public class Reservar extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        ImageView lugar1ImageView = findViewById(R.id.lugar1);
-        ImageView lugar2ImageView = findViewById(R.id.lugar2);
-        ImageView lugar3ImageView = findViewById(R.id.lugar3);
-        ImageView lugar4ImageView = findViewById(R.id.lugar4);
-        ImageView lugar5ImageView = findViewById(R.id.lugar5);
-        ImageView lugar6ImageView = findViewById(R.id.lugar6);
-        ImageView lugar7ImageView = findViewById(R.id.lugar7);
-        ImageView lugar8ImageView = findViewById(R.id.lugar8);
-        ImageView lugar9ImageView = findViewById(R.id.lugar9);
-        ImageView lugar10ImageView = findViewById(R.id.lugar10);
-
-        establecerEstadoLugar(lugar1ImageView, 1);
-        establecerEstadoLugar(lugar2ImageView, 2);
-        establecerEstadoLugar(lugar3ImageView, 3);
-        establecerEstadoLugar(lugar4ImageView, 4);
-        establecerEstadoLugar(lugar5ImageView, 5);
-        establecerEstadoLugar(lugar6ImageView, 6);
-        establecerEstadoLugar(lugar7ImageView, 7);
-        establecerEstadoLugar(lugar8ImageView, 8);
-        establecerEstadoLugar(lugar9ImageView, 9);
-        establecerEstadoLugar(lugar10ImageView, 10);
-
+        for (int i = 1; i <= 10; i++) {
+            ImageView imageView = findViewById(getResources().getIdentifier("lugar" + i, "id", getPackageName()));
+            establecerEstadoLugar(imageView, i);
+            final int lugarId = i;
+            imageView.setOnClickListener(view -> seleccionarLugar(lugarId));
+        }
         TextView textViewVolver = findViewById(R.id.textView25);
         String text = textViewVolver.getText().toString();
         SpannableString ss = new SpannableString(text);
@@ -74,91 +60,24 @@ public class Reservar extends AppCompatActivity {
         textViewVolver.setHighlightColor(Color.TRANSPARENT);
     }
 
-    private boolean lugar1Disponible = true;
-    private boolean lugar2Disponible = false;
-    private boolean lugar3Disponible = true;
-    private boolean lugar4Disponible = false;
-    private boolean lugar5Disponible = true;
-    private boolean lugar6Disponible = false;
-    private boolean lugar7Disponible = true;
-    private boolean lugar8Disponible = false;
-    private boolean lugar9Disponible = true;
-    private boolean lugar10Disponible = false;
+    private void seleccionarLugar(int lugarId) {
+        try {
+            if (!lugaresDisponibles[lugarId - 1]) {
+                return;
+            }
+            if (lugarSeleccionado != 0) {
+                lugaresDisponibles[lugarSeleccionado - 1] = true;
+            }
+            lugarSeleccionado = lugarId;
+            lugaresDisponibles[lugarId - 1] = false;
+            actualizarImagenesLugares();
+            TextView mensajeTextView = findViewById(R.id.textView26);
+            mensajeTextView.setText("Lugar seleccionado: " + lugarId);
 
-    private boolean obtenerEstadoLugar(int lugarId) {
-        switch (lugarId) {
-            case 1:
-                return lugar1Disponible;
-            case 2:
-                return lugar2Disponible;
-            case 3:
-                return lugar3Disponible;
-            case 4:
-                return lugar4Disponible;
-            case 5:
-                return lugar5Disponible;
-            case 6:
-                return lugar6Disponible;
-            case 7:
-                return lugar7Disponible;
-            case 8:
-                return lugar8Disponible;
-            case 9:
-                return lugar9Disponible;
-            case 10:
-                return lugar10Disponible;
-            default:
-                return false;
+        } catch (IndexOutOfBoundsException e) {
+            TextView mensajeTextView = findViewById(R.id.textView26);
+            mensajeTextView.setText("Error: índice fuera de rango");
         }
-    }
-
-    private void cambiarEstadoLugar(int lugarId, boolean disponible) {
-        switch (lugarId) {
-            case 1:
-                lugar1Disponible = disponible;
-                break;
-            case 2:
-                lugar2Disponible = disponible;
-                break;
-            case 3:
-                lugar3Disponible = disponible;
-                break;
-            case 4:
-                lugar4Disponible = disponible;
-                break;
-            case 5:
-                lugar5Disponible = disponible;
-                break;
-            case 6:
-                lugar6Disponible = disponible;
-                break;
-            case 7:
-                lugar7Disponible = disponible;
-                break;
-            case 8:
-                lugar8Disponible = disponible;
-                break;
-            case 9:
-                lugar9Disponible = disponible;
-                break;
-            case 10:
-                lugar10Disponible = disponible;
-                break;
-        }
-    }
-
-    public void seleccionarLugar(View view) {
-        int lugarId = Integer.parseInt(view.getTag().toString());
-        for (int i = 1; i <= 10; i++) {
-            cambiarEstadoLugar(i, true);
-        }
-
-        cambiarEstadoLugar(lugarId, false);
-        ImageView imageView = (ImageView) view;
-        imageView.setImageResource(R.drawable.estacionamientocupado);
-        actualizarImagenesLugares();
-        TextView mensajeTextView = findViewById(R.id.textView26);
-        mensajeTextView.setText("Lugar seleccionado: " + lugarId);
     }
 
     private void actualizarImagenesLugares() {
@@ -169,28 +88,17 @@ public class Reservar extends AppCompatActivity {
     }
 
     public void reservarLugar(View view) {
-        TextView mensajeTextView = findViewById(R.id.textView26);
-        String mensaje = mensajeTextView.getText().toString();
-
-        if (mensaje.equals("Lugar seleccionado: ")) {
+        if (lugarSeleccionado == 0) {
             return;
         }
-
-        int lugarId = Integer.parseInt(mensaje.substring("Lugar seleccionado: ".length()));
-        for (int i = 1; i <= 10; i++) {
-            cambiarEstadoLugar(i, true);
-        }
-        cambiarEstadoLugar(lugarId, false);
-        actualizarImagenesLugares();
-        mensajeTextView.setText("Lugar seleccionado: ");
-
         Intent intent = new Intent(Reservar.this, Reservado.class);
-        intent.putExtra("lugar", lugarId);
+        intent.putExtra("lugar", lugarSeleccionado);
         startActivity(intent);
+        finish();
     }
 
     public void establecerEstadoLugar(ImageView imageView, int lugarId) {
-        boolean disponible = obtenerEstadoLugar(lugarId);
+        boolean disponible = lugaresDisponibles[lugarId - 1];
         if (disponible) {
             imageView.setImageResource(R.drawable.estacionamientodisponible);
         } else {

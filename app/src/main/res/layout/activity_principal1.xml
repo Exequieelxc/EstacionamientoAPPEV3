@@ -6,6 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Principal1">
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -38,14 +42,14 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="213dp"
-                android:layout_height="132dp"
+                android:layout_width="132dp"
+                android:layout_height="112dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintHorizontal_bias="0.014"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.659"
+                app:layout_constraintVertical_bias="0.242"
                 app:srcCompat="@drawable/estacionamiento_1" />
 
             <TextView
@@ -55,12 +59,13 @@
                 android:text="Estacionamiento Central Copiapo"
                 android:textColor="#000000"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.159"
+                app:layout_constraintHorizontal_bias="0.781"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.038" />
+                app:layout_constraintVertical_bias="0.031" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -72,10 +77,10 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintHorizontal_bias="0.662"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.293" />
+                app:layout_constraintVertical_bias="0.338" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,14 +88,16 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Busca tu estacionamiento"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.025" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

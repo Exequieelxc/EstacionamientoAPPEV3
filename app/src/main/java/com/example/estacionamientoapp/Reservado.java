@@ -1,26 +1,33 @@
 package com.example.estacionamientoapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.graphics.Color;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 public class Reservado extends AppCompatActivity {
+
+    private Chronometer chronometer;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +49,40 @@ public class Reservado extends AppCompatActivity {
         Bitmap qrBitmap = generarQr("Lugar: " + lugar);
         qrImageView.setImageBitmap(qrBitmap);
 
-        Chronometer chronometer = findViewById(R.id.chronometer);
+        chronometer = findViewById(R.id.chronometer);
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
 
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-                long hours = (elapsedMillis / 3600000) % 24;
-                long minutes = (elapsedMillis / 60000) % 60;
-                long seconds = (elapsedMillis / 1000) % 60;
-                chronometer.setText(String.format("%02d:%02d", minutes, seconds));
-            }
+        chronometer.setOnChronometerTickListener(chronometer -> {
+            long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+            long minutes = (elapsedMillis / 60000) % 60;
+            long seconds = (elapsedMillis / 1000) % 60;
+            chronometer.setText(String.format("%02d:%02d", minutes, seconds));
         });
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("RESERVA_CANCELADA")) {
+                    if (chronometer != null) {
+                        chronometer.stop();
+                    }
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("RESERVA_CANCELADA"));
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
     public void cancelarReserva(View view) {
         Intent intent = new Intent(this, CancelarReserva.class);
         startActivity(intent);
+        finish();
     }
+
     private Bitmap generarQr(String contenido) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
